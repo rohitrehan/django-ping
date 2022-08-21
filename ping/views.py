@@ -28,11 +28,11 @@ def status(request):
 
     if request.GET.get('fmt') == 'json':
         try:
-            response = simplejson.dumps(response_dict)
+            response = json.dumps(response_dict)
         except UnboundLocalError:
             response_dict = checks(request)
-            response = simplejson.dumps(response_dict)
-        response = simplejson.dumps(response_dict, sort_keys=True)
+            response = json.dumps(response_dict)
+        response = json.dumps(response_dict, sort_keys=True)
         mimetype = 'application/json'  
 
     return HttpResponse(response, mimetype=mimetype, status=200)

@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.utils.importlib import import_module
+from django.utils.module_loading import import_module
 from django.core.exceptions import ImproperlyConfigured
 
 from ping.defaults import *
