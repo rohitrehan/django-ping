@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+
+from rest_framework.response import Response
 from django.conf import settings
 import json
 from django.contrib.auth.decorators import login_required
@@ -19,6 +20,7 @@ def status(request):
     response = "<h1>%s</h1>" % getattr(settings, 'PING_DEFAULT_RESPONSE', PING_DEFAULT_RESPONSE)
     mimetype = getattr(settings, 'PING_DEFAULT_MIMETYPE', PING_DEFAULT_MIMETYPE)
 
+    response_dict = None
     if request.GET.get('checks') == 'true':
         response_dict = checks(request)
         response += "<dl>"
@@ -27,8 +29,6 @@ def status(request):
             response += "<dd>%s</dd>" % str(value)
         response += "</dl>"
 
-    response = json.dumps(response_dict)
     response = json.dumps(response_dict, sort_keys=True)
-    mimetype = 'application/json'
 
-    return HttpResponse(response, mimetype=mimetype, status=200)
+    return Response(response)
